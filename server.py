@@ -83,7 +83,10 @@ def main():
 
             finally:
                 msg = "EXIT"
-                client_socket.send(msg.encode())
+                try:
+                    client_socket.send(msg.encode())
+                except socket.error as err:
+                    logging.error("couldn't disconnect properly" + str(err))
                 client_socket.close()
     except socket.error as err:
         logging.error("received socket error on server socket" + str(err))
